@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# options
+readonly V2RAY_PORT="56565"
+
+function exit_on_error {
+  echo "$1"
+  exit 1
+}
+
+# install docker
+bash <(curl -fsSL https://get.docker.com) || exit_on_error "Failed to install docker"
+
+# v2ray config dir
+mkdir /etc/v2ray
+cd /etc/v2ray
+
+# make certifcate
+
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
+  -keyout v2ray.key -out v2ray.crt || exit_on_error "Failed to generate ssl certificate"
+
+chmod 644 v2ray.key
+
+# generate random uuid
+UUID=$(cat /proc/sys/kernel/random/uuid)
+readonly UUID
+
+# set appropriate alterId
+# https://guide.v2fly.org/en_US/basics/vmess.html#server-side
+readonly ALTER_ID=64
+
+cat <<EOF >config.json
+{
+  "inbounds": [
+    {
+      "port": 56565,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "$UUID",
+            "alterId": 0
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/v2ray/v2ray.crt",
+              "keyFile": "/etc/v2ray/v2ray.key"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ]
+}
+EOF
+
+systemctl start docker || exit_on_error "Failed to start docker"
+
+docker run -d \
+  -p $V2RAY_PORT:"$V2RAY_PORT" \
+  -v /etc/v2ray:/etc/v2ray \
+  v2fly/v2fly-core || exit_on_error "Failed to start docker container"
+
+echo "v2ray installed.
+UUID: $UUID
+Alter ID: $ALTER_ID"

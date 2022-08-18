@@ -1,0 +1,3 @@
+#!/bin/bash
+notify-send "Playing the video"
+mpv $(xclip -selection clipboard -o) --ytdl-format="18"

@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+
+from requests import get
+from random import choice
+from urllib.request import urlretrieve
+from os.path import basename, abspath, isfile
+from subprocess import call
+
+###################################################################
+##                        CONFIGURATION                          ##
+###################################################################
+
+# REDDIT PUBLIC API
+URL = "https://www.reddit.com/r/wallpaper.json?limit=50"
+
+# DOWNLOAD LOCATION
+DOWNLOAD_DIRECTORY = "/home/ipman/Pictures/reddit/"
+
+###################################################################
+##                                                               ##
+###################################################################
+
+# sending a get request
+response = get(url=URL, headers={
+    "User-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0"})
+
+# extract data in json format
+data = response.json()
+
+# check for api errors
+if ("error" in data):
+    print(data)
+    exit()
+
+# extract all wallpaper links
+links = []
+
+for wallpaper in data["data"]["children"]:
+    links.append(wallpaper["data"]["url"])
+
+# select random wallpaper link
+random_wallpaper = choice(links)
+
+# path to download the wallpaper
+wallpaper_path = abspath(DOWNLOAD_DIRECTORY + basename(random_wallpaper))
+
+# if random wallpaper is already downloaded, try another one
+while (isfile(wallpaper_path) == True):
+    random_wallpaper = choice(links)
+    wallpaper_path = abspath(DOWNLOAD_DIRECTORY + basename(random_wallpaper))
+
+# download wallpaper
+urlretrieve(random_wallpaper, wallpaper_path)
+
+# set wallpaper
+#call(["gsettings", "set", "org.mate.background",
+#      "picture-filename", wallpaper_path])

@@ -1,0 +1,25 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Dracula Color Scheme",
+		"Emoji",
+		"FileManager",
+		"GitSavvy",
+		"JSCustom",
+		"JsPrettier",
+		"LSP",
+		"LSP-eslint",
+		"LSP-file-watcher-chokidar",
+		"LSP-gopls",
+		"LSP-prisma",
+		"LSP-tailwindcss",
+		"LSP-typescript",
+		"Package Control",
+		"Prisma",
+	],
+}

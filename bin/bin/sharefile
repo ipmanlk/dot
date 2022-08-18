@@ -1,0 +1,6 @@
+#!/bin/bash
+notify-send "Uploading your file"
+
+curl -sF "file=@\"$(xclip -sel clipboard -o)\"" https://0x0.st | xclip -selection clipboard
+
+notify-send "Upload Complete" "Link is ready & copied to your clipboard." 

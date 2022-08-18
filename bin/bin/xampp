@@ -1,0 +1,19 @@
+#!/bin/bash
+echo "Enter action for lampp [start-s, stop-e, mysql-m] : "
+read action
+
+if [ $action == "s" ]
+then
+	docker start mysql && docker start phpmyadmin
+fi
+
+if [ $action == "e" ]
+then
+	docker stop mysql && docker stop phpmyadmin
+fi
+
+if [ $action == "m" ]
+then
+	sudo /opt/lampp/bin/mysql
+fi
+

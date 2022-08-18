@@ -1,0 +1,16 @@
+#!/bin/bash
+source "/home/$USER/.script.init.sh"
+
+choice=$(ls $PROJECTS_HOME | dmenu)
+
+([[ -z "$choice" ]]) && exit
+
+editor=$(echo -e "sublime\nvscode" | dmenu)
+
+([[ -z "$editor" ]]) && exit
+
+if [[ $editor  == 'vscode' ]]; then
+	command -v codium >/dev/null 2>&1 &&  codium "$PROJECTS_HOME/$choice" || code "$PROJECTS_HOME/$choice"
+else
+	/opt/sublime_text/sublime_text "$PROJECTS_HOME/$choice"
+fi

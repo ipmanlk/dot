@@ -1,0 +1,2 @@
+#!/bin/bash
+cd ~/protonvpn && sudo ./protonvpn-cli.sh --disconnect

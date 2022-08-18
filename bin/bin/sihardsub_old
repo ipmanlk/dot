@@ -1,0 +1,100 @@
+#!/usr/bin/python3
+#
+#   - This script can be used to hardsub Sinhala subtitle files.
+#   - If your input video is in H.265 output will be created in H.264.
+#
+#   - You need to have following packages installed on your system to use this.
+#       - python3
+#       - ffmpeg
+#       - mediainfo
+#
+#
+import sys
+import getopt
+import subprocess
+import io
+from pathlib import Path
+
+
+def main(argv):
+    inputFile = ""
+    subFile = ""
+    outputPath = ""
+
+    try:
+        opts, args = getopt.getopt(
+            argv, "hi:s:o:", ["input=", "subtitle=", "outputpath="])
+    except getopt.GetoptError:
+        print('si_hardsub -i <inputfile> -s <subtitle>')
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt == '-h':
+            print('si_hardsub -i <inputfile> -s <subtitle>')
+            sys.exit()
+        elif opt in ("-i", "--input"):
+            inputFile = arg
+        elif opt in ("-s", "--subtitle"):
+            subFile = str(arg)
+        elif opt in ("-o", "--outputpath"):
+            outputPath = str(arg)
+
+    if (inputFile == "" or subFile == ""):
+        print('si_hardsub -i <inputFile> -s <subtitle>')
+        sys.exit(2)
+
+    # copy sub file to temp
+    bashCommand = ["cp", subFile, "/tmp"]
+    process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE)
+    process.wait()
+
+    #remove temp file
+    bashCommand = ["rm", "/tmp/input.ass"]
+    process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE)
+    process.wait()
+
+    # create subtitle file
+    outputPathAuto = Path(subFile).resolve().parent
+    subFile = "/tmp/" + Path(subFile).resolve().name
+    convertedSubFile = "/tmp/input.ass"
+    bashCommand = ["ffmpeg", "-i", subFile, convertedSubFile]
+    process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE)
+    process.wait()
+
+    # Optional : Resize font size [START]
+    content = Path(convertedSubFile).read_text()
+    content = content.replace(
+        "Style: Default,Arial,16", "Style: Default,Arial,21")
+
+    with io.open(convertedSubFile, 'w', encoding='utf8') as subFile:
+        subFile.write(content)
+
+    # Optional: Resize font size[END]
+
+    # Get media info
+    bashCommand = ["mediainfo", inputFile]
+    process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE)
+    mediainfo, err = process.communicate()
+    process.wait()
+
+    if (outputPath == ""):
+        outputFile = str(outputPathAuto) + "/converted_" + \
+            Path(inputFile).resolve().stem + ".mp4"
+    else:
+        outputFile = str(outputPath) + "converted_" + \
+            Path(inputFile).resolve().stem + ".mp4"
+
+    if ("HEVC" in str(mediainfo)):
+        bashCommand = ['ffmpeg', '-i', inputFile, '-bsf:v', 'h264_mp4toannexb', '-sn', '-map', '0:0', '-map',
+                       '0:1', '-vcodec', 'libx264', '-vf', 'ass=/tmp/input.ass', outputFile]
+
+    else:
+        bashCommand = ['ffmpeg', '-i', inputFile,
+                       '-vf', 'ass=/tmp/input.ass', outputFile]
+
+    process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE)
+    process.wait()
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

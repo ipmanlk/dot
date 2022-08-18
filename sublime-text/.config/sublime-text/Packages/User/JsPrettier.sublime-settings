@@ -1,0 +1,23 @@
+// Settings in here override those in "/JsPrettier/JsPrettier.sublime-settings",
+
+{
+	"prettier_options": {
+		"printWidth": 80,
+		"singleQuote": false,
+		"trailingComma": "es5",
+		"bracketSpacing": true,
+		"bracketSameLine": false,
+		"jsxSingleQuote": false,
+		"parser": "babel",
+		"semi": true,
+		"requirePragma": false,
+		"proseWrap": "preserve",
+		"arrowParens": "always",
+		"htmlWhitespaceSensitivity": "css",
+		"quoteProps": "as-needed",
+		"vueIndentScriptAndStyle": false,
+		"embeddedLanguageFormatting": "auto",
+		"editorconfig": true,
+		"useTabs": true,
+	}
+}

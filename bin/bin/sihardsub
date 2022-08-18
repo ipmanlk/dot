@@ -1,0 +1,139 @@
+#!/bin/bash
+
+# Author: ipmanlk
+# Date Created: 16/10/2021
+# Last Modified: 16/10/2021
+
+# Description
+# Burn subtitle files to videos and output in h264
+
+function show_help() {
+	echo "options:"
+	echo "-h, --help                show brief help"
+	echo "-i, --input=FILE          specify an input video file"
+	echo "-s, --subtitle=FILE       specify a input subtitle file"
+	echo "-o, --output-dir=DIR      specify a directory to store" \
+		"output in"
+	echo "-a, --auto-dir=DIR        specify a directory of directories" \
+		"for auto encoding (containing video+subtitle)"
+}
+
+function encode() {
+	local -r i_file="$1"
+	local -r s_file="$2"
+	local o_dir
+	o_dir=$([[ -z "$3" ]] && echo $(dirname "$i_file") || echo "$3")
+	readonly o_dir
+
+	# generate output filename
+	local input_filename
+	input_filename=$(echo "$i_file" | awk -F'/' '{print $NF}')
+	readonly input_filename
+
+	local -r output_file="$o_dir/${input_filename}_converted.mp4"
+
+	#	create .ass file from subtitle
+	ffmpeg -i "$sub_file" "/tmp/sub.ass" -y &>/dev/null
+
+	# resize the subtitle font size
+	local -r size="Style: Default,Arial,16"
+	local -r new_size="Style: Default,Arial,21"
+	sed -i -e "s/$size/$new_size/g" "/tmp/sub.ass"
+
+	# check if video uses h265 codec
+	local ffprobe_info
+	ffprobe_info=$(ffprobe -show_streams -show_format -pretty \
+		-loglevel quiet "$i_file")
+	readonly ffprobe_info
+
+	local is_h265
+	is_h265=$([[ "$ffprobe_info" == *"codec_name=hevc"* ]] &&
+		echo 1 || echo 0)
+	readonly is_h265
+
+	#	encode video
+	if [[ $is_h265 -eq 1 ]]; then
+		ffmpeg -i "$i_file" -bsf:v h264_mp4toannexb -sn -map 0:0 -map 0:1 \
+			-vcodec libx264 -vf ass="/tmp/sub.ass" "$output_file"
+	else
+		ffmpeg -i "$i_file" -vf ass="/tmp/sub.ass" "$output_file"
+	fi
+}
+
+function main() {
+	while test $# -gt 0; do
+		case "$1" in
+		-h | --help)
+			show_help
+			exit 0
+			;;
+		-i | --input)
+			shift
+			if test $# -gt 0; then
+				local -r input_file=$1
+			else
+				echo "no input file specified"
+				exit 1
+			fi
+			shift
+			;;
+		-s | --subtitle)
+			shift
+			if test $# -gt 0; then
+				local -r sub_file=$1
+			else
+				echo "no subtitle file specified"
+				exit 1
+			fi
+			shift
+			;;
+		-o | --output-dir)
+			shift
+			if test $# -gt 0; then
+				local -r output_dir=$1
+			else
+				echo "no output directory specified"
+				exit 1
+			fi
+			shift
+			;;
+		-a | --auto-dir)
+			shift
+			if test $# -gt 0; then
+				local -r auto_dir=$1
+			else
+				echo "no auto directory specified"
+				exit 1
+			fi
+			shift
+			;;
+		*)
+			echo "$1 is not a recognized flag!"
+			exit 1
+			;;
+		esac
+	done
+
+	[[ -z "$input_file" || -z "$sub_file" || -z "$output_dir" ]] &&
+		[[ -z "$auto_dir" ]] && show_help && exit
+
+	if [[ ! -z "$auto_dir" ]]; then	
+		local sub_file=""
+		local input_file=""
+
+		for dir in "$auto_dir"/*; do
+			if [ -d "$dir" ]; then
+				input_file="$dir/$(ls "$dir" | grep -E 'm4v|mkv|mp4' | head -n1)"
+				sub_file="$dir/$(ls "$dir" | grep -E 'srt|ssa|ass' | head -n1)"
+
+				[[ -z $input_file || -z $sub_file ]] && continue
+
+				encode "$input_file" "$sub_file" "$output_dir"
+			fi
+		done
+	else
+		encode "$input_file" "$sub_file" "$output_dir"
+	fi
+}
+
+main "$@"

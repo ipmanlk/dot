@@ -1,0 +1,11 @@
+[user]
+	email = io@navinda.xyz
+	name = ipmanlk
+	signingkey = BC494D5E2F4A3370
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[commit]
+	gpgsign = true

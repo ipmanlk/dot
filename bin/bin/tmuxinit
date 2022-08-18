@@ -1,0 +1,4 @@
+#!/bin/bash
+ if [ -z "$TMUX" ] && [ ${UID} != 0 ]; then
+	 tmux new-session -A -s root
+ fi

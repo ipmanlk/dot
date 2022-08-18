@@ -1,0 +1,23 @@
+{
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+		"folder_exclude_patterns": [
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		".Trash",
+		".Trash-*",
+		"node_modules",
+		"dist"
+	],
+	"font_face": "Jetbrains Mono",
+	"tab_size": 2,
+	"color_scheme": "Packages/Dracula Color Scheme/Dracula.tmTheme",
+	"spell_check": true,
+	"show_rel_path": true,
+	"theme": "auto",
+	"font_size": 10,
+}

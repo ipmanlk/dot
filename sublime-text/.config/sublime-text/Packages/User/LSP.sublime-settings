@@ -1,0 +1,10 @@
+// Settings in here override those in "LSP/LSP.sublime-settings"
+{
+	"lsp_code_actions_on_save": {
+		// "source.organizeImports.ts": true,
+		// "source.removeUnused.ts": true,
+		// "source.fixAll.ts": true,
+	},
+	// "log_debug": true,
+	// "log_server": ["panel"]
+}

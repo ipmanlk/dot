@@ -1,0 +1,64 @@
+# Inserts a blank line between shell prompts
+add_newline = false
+
+# [ ]
+
+format= """\
+[╭╴](bold 238)(bold #8ae6fa)$username$hostname$directory\
+$all[╰](bold 238)$character"""
+
+[package]
+disabled = true
+
+[character]
+success_symbol = "[❯](#bd93f9)"
+error_symbol = "[❯](#ff5555)"
+vicmd_symbol = "[❮](#50fa7b)"
+
+[username]
+style_user = "bold #50f87a"
+style_root = "bold red"
+format = "[$user@]($style)"
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "[$hostname]($style)"
+style = "bold #50f87a"
+disabled = false
+
+[directory]
+truncate_to_repo = true
+format = " [$read_only]($read_only_style)[$path]($style) "
+style = "bold #8ae6fa"
+read_only = " "
+read_only_style = "red"
+home_symbol = " ~"
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold #fa77c2"
+truncation_length = 256
+truncation_symbol = "..."
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🔖 "
+
+[git_status]
+#format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+conflicted = "🏳"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = "✓"
+staged = '[++\($count\)](#50fa7b)'
+deleted =" "
+untracked = ""
+renamed = "»"
+modified = "!"
+style = "#bd93f9"
+
+[nodejs]
+disabled = true

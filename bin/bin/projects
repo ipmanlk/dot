@@ -1,0 +1,10 @@
+#!/bin/bash
+ARCH_DIR="/run/media/ipman/DATA/ipdata/projects/"
+DEBIAN_DIR="/media/ipman/DATA/ipdata/projects/"
+PROJECTS_DIR=$([ -d "$DEBIAN_DIR" ] && echo "$DEBIAN_DIR" || echo "$ARCH_DIR")
+
+unset ARCH_DIR
+unset DEBIAN_DIR
+
+cd "$PROJECTS_DIR"
+

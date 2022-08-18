@@ -1,0 +1,8 @@
+*.swp
+fish/.config/fish/completions/
+fish/.config/fish/conf.d/z.fish
+fish/.config/fish/fish_variables
+fish/.config/fish/functions/*
+!fish/.config/fish/functions/fish_user_key_bindings.fish
+!fish/.config/fish/functions/peco_change_directory.fish
+!fish/.config/fish/functions/peco_select_history.fish

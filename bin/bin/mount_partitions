@@ -1,0 +1,5 @@
+#!/bin/bash
+udisksctl mount -b /dev/sdd1
+udisksctl mount -b /dev/sde1
+udisksctl mount -b /dev/sda1
+
