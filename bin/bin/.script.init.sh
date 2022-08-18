@@ -1,4 +1,2 @@
 #!/bin/bash
-PROJECTS_HOME=/home/ipman/projects
-PATH="$PATH:/home/$USER/.nvm/current/bin"
-
+PROJECTS_HOME=/home/$USER/projects

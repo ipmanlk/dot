@@ -1,5 +1,5 @@
 #!/bin/bash
-source "/home/$USER/.script.init.sh"
+source "/home/$USER/bin/.script.init.sh"
 
 choice=$(ls $PROJECTS_HOME | dmenu)
 
