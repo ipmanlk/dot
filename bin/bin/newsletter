@@ -1,0 +1,5 @@
+#!/bin/bash
+docker start twc2
+
+tmux new-session -d 'cd /home/ipman/projects/newsletter/salessuite-newsletter-web/ && npm run dev'
+tmux split-window -v 'cd /home/ipman/projects/newsletter/salessuite-newsletter-api/ && npm run dev'
