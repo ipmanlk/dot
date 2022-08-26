@@ -15,7 +15,7 @@
 	],
 	"font_face": "Jetbrains Mono",
 	"tab_size": 2,
-	"color_scheme": "Packages/Dracula Color Scheme/Dracula.tmTheme",
+	"color_scheme": "gruvbox (Dark) (Hard) NDC.sublime-color-scheme",
 	"spell_check": true,
 	"show_rel_path": true,
 	"theme": "auto",
