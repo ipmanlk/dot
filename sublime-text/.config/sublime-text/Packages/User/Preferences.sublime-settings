@@ -18,6 +18,7 @@
 	"color_scheme": "gruvbox (Dark) (Hard) NDC.sublime-color-scheme",
 	"spell_check": true,
 	"show_rel_path": true,
-	"theme": "auto",
+	"theme": "Default Dark.sublime-theme",
 	"font_size": 10,
+	"remember_workspace": false
 }
