@@ -1,24 +1,54 @@
 {
-	"ignored_packages":
-	[
-		"Vintage",
-	],
-		"folder_exclude_patterns": [
+	"ignored_packages": ["Vintage"],
+	"folder_exclude_patterns": [
 		".svn",
 		".git",
 		".hg",
 		"CVS",
 		".Trash",
 		".Trash-*",
-		"node_modules",
-		"dist"
+		"__pycache__",
+		".sass-cache",
+		".mypy_cache",
+		"*.egg-info",
+		".tox",
+		".venv*",
+		".pytest_cache"
 	],
+	"binary_file_patterns": [
+		"*.jpg",
+		"*.jpeg",
+		"*.png",
+		"*.gif",
+		"*.ttf",
+		"*.tga",
+		"*.dds",
+		"*.ico",
+		"*.eot",
+		"*.pdf",
+		"*.swf",
+		"*.jar",
+		"*.zip",
+		"node_modules/*",
+		"*/node_modules/*",
+		"dist/*"
+	],
+	"font_size": 12,
 	"font_face": "Jetbrains Mono",
 	"tab_size": 2,
 	"color_scheme": "gruvbox (Dark) (Hard) NDC.sublime-color-scheme",
 	"spell_check": true,
 	"show_rel_path": true,
-	"theme": "Default Dark.sublime-theme",
-	"font_size": 10,
+	"theme": "auto",
+	"show_encoding": true,
+	"show_line_endings": true,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"auto_complete_cycle": true,
+	"caret_style": "solid",
+	"caret_extra_bottom": 2,
+	"caret_extra_top": 2,
+	"ensure_newline_at_eof_on_save": true,
+	// "mini_auto_complete": true,
 	"remember_workspace": false
 }
