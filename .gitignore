@@ -6,3 +6,5 @@ fish/.config/fish/functions/*
 !fish/.config/fish/functions/fish_user_key_bindings.fish
 !fish/.config/fish/functions/peco_change_directory.fish
 !fish/.config/fish/functions/peco_select_history.fish
+sublime-text/.config/sublime-text/Packages/User/Emmet.sublime-settings
+sublime-text/.config/sublime-text/Packages/User/GitSavvy/GitSavvy.log_graph_view.hidden-color-scheme

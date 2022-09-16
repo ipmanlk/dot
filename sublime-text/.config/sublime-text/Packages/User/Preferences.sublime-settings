@@ -1,5 +1,5 @@
 {
-	"ignored_packages": ["Vintage"],
+	"ignored_packages": [],
 	"folder_exclude_patterns": [
 		".svn",
 		".git",
@@ -36,10 +36,10 @@
 	"font_size": 12,
 	"font_face": "Jetbrains Mono",
 	"tab_size": 2,
-	"color_scheme": "gruvbox (Dark) (Hard) NDC.sublime-color-scheme",
+	"color_scheme": "Packages/Dracula Color Scheme/Dracula.tmTheme",
 	"spell_check": true,
 	"show_rel_path": true,
-	"theme": "auto",
+	"theme": "Adaptive.sublime-theme",
 	"show_encoding": true,
 	"show_line_endings": true,
 	"highlight_line": true,

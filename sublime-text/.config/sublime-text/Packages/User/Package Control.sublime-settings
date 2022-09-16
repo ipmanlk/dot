@@ -20,9 +20,11 @@
 		"LSP-file-watcher-chokidar",
 		"LSP-gopls",
 		"LSP-prisma",
+		"LSP-pyright",
 		"LSP-tailwindcss",
 		"LSP-typescript",
 		"Package Control",
 		"Prisma",
+		"python-black",
 	],
 }
