@@ -1,4 +1,13 @@
 [
 	{ "keys": ["ctrl+alt+f"], "command": "js_prettier" },
-	{ "keys": ["f2"], "command": "lsp_symbol_rename" }
+	{ "keys": ["f2"], "command": "lsp_symbol_rename" },
+	{
+		"keys": ["f3"],
+		"command": "lsp_code_actions",
+		"args": { "only_kinds": ["source"] }
+	},
+	{
+		"keys": ["f4"],
+		"command": "lsp_restart_server"
+	}
 ]

@@ -1,5 +1,7 @@
 {
-	"ignored_packages": [],
+	"ignored_packages": [
+		"Vintage",
+	],
 	"folder_exclude_patterns": [
 		".svn",
 		".git",
@@ -31,7 +33,8 @@
 		"*.zip",
 		"node_modules/*",
 		"*/node_modules/*",
-		"dist/*"
+		"dist/*",
+		"build/*"
 	],
 	"font_size": 12,
 	"font_face": "Jetbrains Mono",
@@ -49,6 +52,6 @@
 	"caret_extra_bottom": 2,
 	"caret_extra_top": 2,
 	"ensure_newline_at_eof_on_save": true,
-	// "mini_auto_complete": true,
-	"remember_workspace": false
+	"mini_auto_complete": false,
+	"remember_workspace": false,
 }
