@@ -1,5 +1,6 @@
 {
 	"ignored_packages": [
+		"LSP-file-watcher-chokidar",
 		"Vintage",
 	],
 	"folder_exclude_patterns": [
@@ -34,7 +35,8 @@
 		"node_modules/*",
 		"*/node_modules/*",
 		"dist/*",
-		"build/*"
+		"build/*",
+		".next/*"
 	],
 	"font_size": 12,
 	"font_face": "Jetbrains Mono",
