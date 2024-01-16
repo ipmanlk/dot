@@ -1,6 +1,7 @@
 #!/bin/bash
-# Base directory for projects
-BASE_DIR="/home/$USER/projects"
+
+# Base directories for projects
+BASE_DIRS=("/home/$USER/projects")
 
 # Function to check if a directory does not contain specific files or directories
 check_dir() {
@@ -23,7 +24,7 @@ check_dir() {
 export -f check_dir
 
 # Find directories up to level 2 (including subdirectories of projects)
-DIRS=$(find "$BASE_DIR" -maxdepth 1 -type d \
+DIRS=$(find "${BASE_DIRS[@]}" -maxdepth 1 -type d \
     ! -path '*/node_modules/*' \
     ! -path '*/.git/*' \
     ! -path '*/dist/*' \
