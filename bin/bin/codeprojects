@@ -1,30 +1,23 @@
 #!/bin/bash
 
 # Base directories for projects
-BASE_DIRS=("/home/$USER/projects")
+BASE_DIRS=("/run/media/ipman/DATA/projects/working_on" "/run/media/ipman/DATA/projects/playground" "/run/media/ipman/DATA/twc")
 
 # Function to check if a directory does not contain specific files or directories
 check_dir() {
     local dir=$1
-    # Array of directories and files to exclude
     local exclusions=("node_modules" "src" "package.json" ".github")
-
-    # Loop through the exclusions and check if they exist in the directory
     for exclusion in "${exclusions[@]}"; do
         if [ -e "$dir/$exclusion" ]; then
-            return # Exit the function if any exclusion is found
+            return
         fi
     done
-
-    # If no exclusions are found, find subdirectories and echo them
     find "$dir" -maxdepth 1 -mindepth 1 -type d
 }
 
-# Export the function and its name so it's available in subshells
 export -f check_dir
 
-# Find directories up to level 2 (including subdirectories of projects)
-DIRS=$(find "${BASE_DIRS[@]}" -maxdepth 1 -type d \
+SELECTED_DIR=$(find "${BASE_DIRS[@]}" -maxdepth 1 -type d \
     ! -path '*/node_modules/*' \
     ! -path '*/.git/*' \
     ! -path '*/dist/*' \
@@ -51,29 +44,21 @@ DIRS=$(find "${BASE_DIRS[@]}" -maxdepth 1 -type d \
     ! -path '*/.studio/*' \
     ! -path '*/.sublime/*' \
     -exec bash -c 'check_dir "$0"' {} \; \
-    | sort -u | wofi --normal-window --show dmenu --prompt "Choose directory:")
+    | sort -u | peco --prompt "Choose directory:")
 
-# Exit if no directories are found
-[ -z "$DIRS" ] && exit
+[ -z "$SELECTED_DIR" ] && exit
 
-# Extract the selected directory
-SELECTED_DIR=$(echo "$DIRS" | awk -F/ '{print NF-1 " " $0}' | sort -nk1 | cut -d' ' -f2- | head -n 1)
-
-# Resolve if the directory is a symlink
 [ -L "$SELECTED_DIR" ] && SELECTED_DIR=$(readlink -f "$SELECTED_DIR")
 
-# Prompt for the choice of editor
-EDITOR_CHOICE=$(echo -e "code\nsublime" | wofi --normal-window --show dmenu --prompt "Choose editor:")
-
-# Open the directory with the selected editor
+EDITOR_CHOICE=$(echo -e "code\nsublime" | peco --prompt "Choose editor:")
 case $EDITOR_CHOICE in
-    "code")
-        code "$SELECTED_DIR"
-        ;;
-    "sublime")
-        subl "$SELECTED_DIR"
-        ;;
-    *)
-        echo "No editor selected, or invalid option."
-        ;;
+"code")
+    code "$SELECTED_DIR"
+    ;;
+"sublime")
+    subl "$SELECTED_DIR"
+    ;;
+*)
+    echo "No editor selected, or invalid option."
+    ;;
 esac
