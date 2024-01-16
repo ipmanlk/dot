@@ -1,3 +1,3 @@
 #!/bin/bash
 notify-send "Playing the video"
-mpv $(xclip -selection clipboard -o) --ytdl-format="18"
+mpv $(xclip -selection clipboard -o) --ytdl-format="22" --gpu-context=x11egl
