@@ -1,16 +1,78 @@
 #!/bin/bash
-source "/home/$USER/bin/.script.init.sh"
+# Base directory for projects
+BASE_DIR="/home/$USER/projects"
 
-choice=$(ls $PROJECTS_HOME | dmenu)
+# Function to check if a directory does not contain specific files or directories
+check_dir() {
+    local dir=$1
+    # Array of directories and files to exclude
+    local exclusions=("node_modules" "src" "package.json" ".github")
 
-([[ -z "$choice" ]]) && exit
+    # Loop through the exclusions and check if they exist in the directory
+    for exclusion in "${exclusions[@]}"; do
+        if [ -e "$dir/$exclusion" ]; then
+            return # Exit the function if any exclusion is found
+        fi
+    done
 
-editor=$(echo -e "sublime\nvscode" | dmenu)
+    # If no exclusions are found, find subdirectories and echo them
+    find "$dir" -maxdepth 1 -mindepth 1 -type d
+}
 
-([[ -z "$editor" ]]) && exit
+# Export the function and its name so it's available in subshells
+export -f check_dir
 
-if [[ $editor  == 'vscode' ]]; then
-	command -v codium >/dev/null 2>&1 &&  codium "$PROJECTS_HOME/$choice" || code "$PROJECTS_HOME/$choice"
-else
-	/opt/sublime_text/sublime_text "$PROJECTS_HOME/$choice"
-fi
+# Find directories up to level 2 (including subdirectories of projects)
+DIRS=$(find "$BASE_DIR" -maxdepth 1 -type d \
+    ! -path '*/node_modules/*' \
+    ! -path '*/.git/*' \
+    ! -path '*/dist/*' \
+    ! -path '*/build/*' \
+    ! -path '*/output/*' \
+    ! -path '*/.cache/*' \
+    ! -path '*/.vscode/*' \
+    ! -path '*/.idea/*' \
+    ! -path '*/__pycache__/*' \
+    ! -path '*/venv/*' \
+    ! -path '*/bower_components/*' \
+    ! -path '*/.npm/*' \
+    ! -path '*/logs/*' \
+    ! -path '*/tmp/*' \
+    ! -path '*/temp/*' \
+    ! -path '*/.temp/*' \
+    ! -path '*/.tmp/*' \
+    ! -path '*/.sublime-workspace/*' \
+    ! -path '*/.sublime-project/*' \
+    ! -path '*/.eclipse/*' \
+    ! -path '*/.netbeans/*' \
+    ! -path '*/.intellij/*' \
+    ! -path '*/.jbuilder/*' \
+    ! -path '*/.studio/*' \
+    ! -path '*/.sublime/*' \
+    -exec bash -c 'check_dir "$0"' {} \; \
+    | sort -u | wofi --normal-window --show dmenu --prompt "Choose directory:")
+
+# Exit if no directories are found
+[ -z "$DIRS" ] && exit
+
+# Extract the selected directory
+SELECTED_DIR=$(echo "$DIRS" | awk -F/ '{print NF-1 " " $0}' | sort -nk1 | cut -d' ' -f2- | head -n 1)
+
+# Resolve if the directory is a symlink
+[ -L "$SELECTED_DIR" ] && SELECTED_DIR=$(readlink -f "$SELECTED_DIR")
+
+# Prompt for the choice of editor
+EDITOR_CHOICE=$(echo -e "code\nsublime" | wofi --normal-window --show dmenu --prompt "Choose editor:")
+
+# Open the directory with the selected editor
+case $EDITOR_CHOICE in
+    "code")
+        code "$SELECTED_DIR"
+        ;;
+    "sublime")
+        subl "$SELECTED_DIR"
+        ;;
+    *)
+        echo "No editor selected, or invalid option."
+        ;;
+esac
