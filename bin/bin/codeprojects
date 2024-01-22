@@ -50,7 +50,8 @@ SELECTED_DIR=$(find "${BASE_DIRS[@]}" -maxdepth 1 -type d \
 
 [ -L "$SELECTED_DIR" ] && SELECTED_DIR=$(readlink -f "$SELECTED_DIR")
 
-EDITOR_CHOICE=$(echo -e "code\nsublime" | peco --prompt "Choose editor:")
+
+EDITOR_CHOICE=$(echo -e "code\nsublime\nnone" | peco --prompt "Choose editor:")
 case $EDITOR_CHOICE in
 "code")
     code "$SELECTED_DIR"
@@ -59,6 +60,7 @@ case $EDITOR_CHOICE in
     subl "$SELECTED_DIR"
     ;;
 *)
-    echo "No editor selected, or invalid option."
     ;;
 esac
+
+echo "$SELECTED_DIR"
