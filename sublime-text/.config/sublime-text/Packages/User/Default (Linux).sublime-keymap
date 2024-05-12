@@ -9,5 +9,6 @@
 	{
 		"keys": ["f4"],
 		"command": "lsp_restart_server"
-	}
+	},
+	{ "keys": ["ctrl+shift+w"], "command": "close_all" }
 ]
