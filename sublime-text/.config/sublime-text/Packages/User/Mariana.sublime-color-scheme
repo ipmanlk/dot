@@ -4,5 +4,11 @@
 	"globals": {
 		"misspelling": "#438082"
 	},
-	"rules": []
+	"rules": [
+		{
+			"name": "Mapping Key Names",
+			"scope": "meta.mapping.key string",
+			"foreground": "var(pink)"
+		}
+	]
 }
