@@ -1,6 +1,7 @@
 {
 	"ignored_packages": [
 		"LSP-file-watcher-chokidar",
+		"NeoVintageous",
 		"Vintage",
 	],
 	"folder_exclude_patterns": [
@@ -39,9 +40,9 @@
 		".next/*"
 	],
 	"font_size": 12,
-	"font_face": "Jetbrains Mono",
+	"font_face": "FiraCode Nerd Font Mono",
 	"tab_size": 2,
-	"color_scheme": "Packages/Dracula Color Scheme/Dracula.tmTheme",
+	"color_scheme": "One Dark.sublime-color-scheme",
 	"spell_check": true,
 	"show_rel_path": true,
 	"theme": "Adaptive.sublime-theme",
@@ -56,4 +57,11 @@
 	"ensure_newline_at_eof_on_save": true,
 	"mini_auto_complete": false,
 	"remember_workspace": false,
+	"close_windows_when_empty": false,
+	"hot_exit": true,
+	"fold_style": "auto",
+	"index_files": true,
+	"rulers": [80],
+	"hardware_acceleration": "opengl",
+	"neovintageous_build_version": 13200,
 }

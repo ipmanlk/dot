@@ -18,6 +18,9 @@
 		"vueIndentScriptAndStyle": false,
 		"embeddedLanguageFormatting": "auto",
 		"editorconfig": true,
-		"useTabs": true,
+		"useTabs": false,
+		"endOfLine": "lf",
+		"insertPragma": false,
+		"tabWidth": 2
 	}
 }
