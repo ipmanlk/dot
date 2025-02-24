@@ -37,7 +37,8 @@
 		"*/node_modules/*",
 		"dist/*",
 		"build/*",
-		".next/*"
+		".next/*",
+		".svelte-kit/*"
 	],
 	"font_size": 12,
 	"font_face": "FiraCode Nerd Font Mono",

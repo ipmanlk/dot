@@ -6,7 +6,6 @@
 	"installed_packages":
 	[
 		"A File Icon",
-		"AutoProjects",
 		"AutoSetSyntax",
 		"Compass Navigator",
 		"Dockerfile Syntax Highlighting",
@@ -27,6 +26,7 @@
 		"LSP-json",
 		"LSP-prisma",
 		"LSP-pyright",
+		"LSP-svelte",
 		"LSP-tailwindcss",
 		"LSP-typescript",
 		"LSP-yaml",
@@ -37,6 +37,7 @@
 		"Prisma",
 		"REM PX",
 		"SideBarTools",
+		"Svelte",
 		"Terminus",
 		"Theme - One",
 	],
