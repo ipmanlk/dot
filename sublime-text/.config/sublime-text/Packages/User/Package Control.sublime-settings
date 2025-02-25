@@ -15,6 +15,7 @@
 		"FileManager",
 		"GitSavvy",
 		"Gomod",
+		"JS Template String Converter",
 		"JSCustom",
 		"JsPrettier",
 		"LSP",
@@ -40,5 +41,6 @@
 		"Svelte",
 		"Terminus",
 		"Theme - One",
+		"YamlPipelines",
 	],
 }
